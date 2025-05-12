@@ -1,35 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import { api } from "./api";
+import { Contact } from "./components/contact";
 
+interface Contact {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+}
 function App() {
-  const [count, setCount] = useState(0)
+  const [contacts, setContacts] = useState<Contact[]>([]);
 
+  const fetchContacts = async () => {
+    try {
+      const data = await api.get("/contact/");
+      setContacts(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteContact = async (id: string) => {
+    try {
+      await api.delete(`/contact/${id}`);
+      setContacts((state) => state.filter((contact) => contact.id != id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchContacts();
+  }, []);
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div style={styles.container}>
+        <h1>Lista de contatos</h1>
+        {contacts.map((contact) => (
+          <Contact
+            key={contact.id}
+            name={contact.name}
+            email={contact.email}
+            phone={contact.phone}
+            onDelete={() => deleteContact(contact.id)}
+          />
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+const styles = {
+  container: {
+    padding: "0 100px 0",
+  },
+};
+export default App;
