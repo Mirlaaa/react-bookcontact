@@ -4,39 +4,60 @@ interface ContactProps {
   phone: string;
   onDelete: () => void;
 }
+
 export function Contact({ name, email, phone, onDelete }: ContactProps) {
   return (
     <div style={styles.container}>
-      <div>
-        <h2 style={styles.name}>Nome: {name}</h2>
-        <p style={styles.email}>{email}</p>
-        <span style={styles.phone}>Telefone: {phone} </span>
+      <div style={styles.info}>
+        <h2 style={styles.name}>{name}</h2>
+        <p style={styles.detail}>
+          <strong>Email:</strong> {email}
+        </p>
+        <p style={styles.detail}>
+          <strong>Telefone:</strong> {phone}
+        </p>
       </div>
-      <button onClick={onDelete}>Excluir</button>
+      <button onClick={onDelete} style={styles.button}>
+        Excluir
+      </button>
     </div>
   );
 }
 
 const styles = {
   container: {
-    border: "1px solid #ccc",
-    padding: "12px",
-    margin: "2px 0",
+    border: "1px solid #ddd",
+    padding: "16px",
     borderRadius: "8px",
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#f7f7f7",
     display: "flex",
-    alignItems: "center",
     justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: "12px",
+    boxShadow: "0 2px 6px rgba(0, 0, 0, 0.05)",
+  },
+  info: {
+    flex: 1,
   },
   name: {
     fontSize: "20px",
+    marginBottom: "8px",
     color: "#333",
   },
-  email: {
+  detail: {
     fontSize: "14px",
-    color: "#666",
+    color: "#555",
+    marginBottom: "4px",
   },
-  phone: {
+  button: {
+    backgroundColor: "#dc3545",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    padding: "8px 12px",
     fontWeight: "bold",
+    cursor: "pointer",
+    alignSelf: "center",
+    transition: "background-color 0.3s ease",
   },
 };

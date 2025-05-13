@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api";
 import { Contact } from "../components/contact";
+import { useNavigate } from "react-router-dom";
 
 interface Contact {
   id: string;
@@ -11,6 +12,11 @@ interface Contact {
 function Home() {
   const [contacts, setContacts] = useState<Contact[]>([]);
 
+  const navigate = useNavigate();
+
+  function goToCreateContactPage() {
+    navigate("/create");
+  }
   const fetchContacts = async () => {
     try {
       const data = await api.get("/contact/");
@@ -47,7 +53,10 @@ function Home() {
           />
         ))}
 
-        <button> Criar novo contato </button>
+        <button style={styles.button} onClick={goToCreateContactPage}>
+          {" "}
+          Criar novo contato{" "}
+        </button>
       </div>
     </>
   );
@@ -55,7 +64,18 @@ function Home() {
 
 const styles = {
   container: {
-    padding: "0 100px 0",
+    padding: "50px 100px 50px",
+  },
+  button: {
+    marginTop: "12px",
+    padding: "10px",
+    backgroundColor: "#007bff",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    fontWeight: "bold",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
   },
 };
 export default Home;
