@@ -2,7 +2,7 @@ interface ContactProps {
   name: string;
   email: string;
   phone: string;
-  onDelete: (id: string) => void;
+  onDelete: () => void;
 }
 export function Contact({ name, email, phone, onDelete }: ContactProps) {
   return (
@@ -12,7 +12,7 @@ export function Contact({ name, email, phone, onDelete }: ContactProps) {
         <p style={styles.email}>{email}</p>
         <span style={styles.phone}>Telefone: {phone} </span>
       </div>
-      <button onClick={() => onDelete}>Excluir</button>
+      <button onClick={onDelete}>Excluir</button>
     </div>
   );
 }
