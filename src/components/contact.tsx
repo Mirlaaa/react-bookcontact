@@ -3,9 +3,16 @@ interface ContactProps {
   email: string;
   phone: string;
   onDelete: () => void;
+  onEdit: () => void;
 }
 
-export function Contact({ name, email, phone, onDelete }: ContactProps) {
+export function Contact({
+  name,
+  email,
+  phone,
+  onDelete,
+  onEdit,
+}: ContactProps) {
   return (
     <div style={styles.container}>
       <div style={styles.info}>
@@ -17,6 +24,11 @@ export function Contact({ name, email, phone, onDelete }: ContactProps) {
           <strong>Telefone:</strong> {phone}
         </p>
       </div>
+
+      <button onClick={onEdit} style={styles.button}>
+        {" "}
+        Editar{" "}
+      </button>
       <button onClick={onDelete} style={styles.button}>
         Excluir
       </button>

@@ -36,6 +36,10 @@ function Home() {
     }
   };
 
+  function editContact(id: string) {
+    navigate(`/edit/${id}`);
+  }
+
   useEffect(() => {
     fetchContacts();
   }, []);
@@ -50,6 +54,7 @@ function Home() {
             email={contact.email}
             phone={contact.phone}
             onDelete={() => deleteContact(contact.id)}
+            onEdit={() => editContact(contact.id)}
           />
         ))}
 
